@@ -1,0 +1,68 @@
+<form action="/add-character" method="POST">
+
+    <div class="row">
+        <label>Game</label>
+        <select name="gameName">
+            {% for g in games %}
+                <option value="{{ g['gameName'] }}">{{ g['gameName'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <label>Archetype 1</label>
+        <select name="archetype1">
+            {% for a in archetypes %}
+                <option value="{{ a['archetypeName'] }}">{{ a['archetypeName'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <label>Archetype 2 (optional)</label>
+        <select name="archetype2">
+            <option value="">None</option>
+            {% for a in archetypes %}
+                <option value="{{ a['archetypeName'] }}">{{ a['archetypeName'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <label>Affiliation</label>
+        <select name="affiliationId">
+            <option value="">None</option>
+            {% for a in affiliations %}
+                <option value="{{ a['affiliationId'] }}">{{ a['affiliationName'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <label>Hair Colour</label>
+        <select name="hairColour">
+            {% for h in hairColours %}
+                <option value="{{ h }}">{{ h['hairColour'] }}</option>
+            {% endfor %}
+        </select>
+    </div>
+
+    <div class="row">
+        <input name="characterName" placeholder="Character Name" required>
+    </div>
+
+    <div class="row">
+        <input name="genderId" type="number" placeholder="Gender ID" required>
+    </div>
+
+    <div class="row">
+        <input name="characterAge" type="text" placeholder="Age" required>
+    </div>
+
+    <div class="row">
+        <input name="characterHeight" placeholder="Height (e.g. 180cm)" required>
+    </div>
+
+    <button type="submit">Add Character</button>
+
+</form>

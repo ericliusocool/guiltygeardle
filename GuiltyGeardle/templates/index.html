@@ -1,0 +1,54 @@
+{% extends "layout.html" %}
+{% block title %}Home page{% endblock %}
+{% block content %}
+<div class="container-fluid">
+    <div class="col">
+        <div class="row">
+            <div class="col-xl-10 mx-auto">
+                
+                <a href="#" class="logo-container">
+                    <img src="/static/images/GuiltyGeardleLogo.png" alt="Guilty Geardle Logo" class="logo-img">
+                </a>
+
+                <h1 class="text-center">Welcome to Guilty Geardle!</h1>
+                <p class="text-center">You know Guilty Gear? Well it's that but Legally Distinct Word Gamedle version.</p>
+
+                <div class="buttons-container">
+                    <a href="/classic" class="button-game btn-shine">
+                        <img src="/static/images/ButtonClassic.png" alt="Classic Mode" class="button-img">
+                        <div class="button-text">
+                            <div class="button-title">Classic</div>
+                            <div class="button-description">Get clues on every try</div>
+                        </div>
+                    </a>
+
+                    <a href="#moves" class="button-game btn-shine">
+                        <img src="/static/images/ButtonMoves.png" alt="Moves Mode" class="button-img">
+                        <div class="button-text">
+                            <div class="button-title">Moves (WIP)</div>
+                            <div class="button-description">Guess with special moves</div>
+                        </div>
+                    </a>
+
+                    <a href="#quote" class="button-game btn-shine">
+                        <img src="/static/images/ButtonQuote.png" alt="Quote Mode" class="button-img">
+                        <div class="button-text">
+                            <div class="button-title">Quote (WIP)</div>
+                            <div class="button-description">Guess with a dialogue</div>
+                        </div>
+                    </a>
+
+                    <a href="#artwork" class="button-game btn-shine">
+                        <img src="/static/images/ButtonArtwork.png" alt="Artwork Mode" class="button-img">
+                        <div class="button-text">
+                            <div class="button-title">Artwork (WIP)</div>
+                            <div class="button-description">Guess with the artwork</div>
+                        </div>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

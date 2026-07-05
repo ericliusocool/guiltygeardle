@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Edit Characters</title>
+</head>
+<body>
+
+<h1>Edit Characters</h1>
+
+{% for character in characters %}
+
+<form method="POST" enctype="multipart/form-data">
+
+    <input
+        type="hidden"
+        name="characterID"
+        value="{{ character.characterID }}">
+
+    <h2>{{ character.characterName }}</h2>
+
+    <img
+        src="{{ url_for('static', filename='images/characters/' + character.characterImage) }}"
+        width="120">
+
+    <br><br>
+
+    Name<br>
+    <input
+        type="text"
+        name="characterName"
+        value="{{ character.characterName }}">
+
+    <br><br>
+
+    Alias<br>
+    <input
+        type="text"
+        name="characterAlias"
+        value="{{ character.characterAlias or '' }}">
+
+    <br><br>
+
+    Affiliations<br>
+    {% for affiliation in affiliations %}
+    <label>
+        <input
+            type="checkbox"
+            name="affiliations"
+            value="{{ affiliation.affiliationID }}"
+            {% if affiliation.affiliationID in character_affiliations[character.characterID] %}
+                checked
+            {% endif %}
+        >
+        {{ affiliation.affiliationName }}
+    </label>
+    <br>
+    {% endfor %}
+
+    <br><br>
+
+    Upload Image<br>
+    <input type="file" name="image">
+
+    <br><br>
+
+    <button type="submit">
+        Save
+    </button>
+
+    <button
+        type="submit"
+        name="resetImage"
+        value="1">
+        Reset Image
+    </button>
+
+</form>
+
+<hr>
+
+{% endfor %}
+
+</body>
+</html>
