@@ -469,9 +469,16 @@ input#guessInput:disabled {
   Guess Table
 ========================= */
 
+.table-wrapper {
+    width: 100%;
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch; 
+}
+
 #guessTable {
     display: table;
     table-layout: fixed;
+    min-width: 1000px;
     width: 100%;
     max-width: 1000px;
     margin: 30px auto;
