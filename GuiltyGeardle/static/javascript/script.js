@@ -1,12 +1,67 @@
 const input = document.getElementById("guessInput");
 const suggestions = document.getElementById("suggestions");
 const guessTable = document.querySelector("#guessTable tbody");
+const modes = ["classic", "moves", "quote", "artwork"];
 
 let selectedIndex = -1;
 let currentSuggestions = [];
 let guessCount = 0;
 let selectedCharacter = null;
 let guessedCharacters = new Set();
+
+modes.forEach(mode => {
+    if (localStorage.getItem(`${mode}Completed`) === "true") {
+        document
+            .querySelectorAll(`.mode-button[data-mode="${mode}"]`)
+            .forEach(btn => btn.classList.add("completed"));
+    }
+});
+
+window.addEventListener("load", () => {
+    const currentMode = "classic";
+
+    const savedGuesses =
+        JSON.parse(localStorage.getItem(`${currentMode}Guesses`) || "[]");
+
+    savedGuesses.forEach(result => {
+        const row = addGuessRow(result);
+        flipRowCells(row);
+        guessCount++;
+        guessedCharacters.add(result.name);
+    });
+
+    if (localStorage.getItem(`${currentMode}Completed`) === "true") {
+        showWinScreen(
+            localStorage.getItem(`${currentMode}TargetName`),
+            localStorage.getItem(`${currentMode}TargetImage`),
+            parseInt(localStorage.getItem(`${currentMode}GuessCount`), 10)
+        );
+    }
+
+    updateScrollHint();
+});
+
+function showWinScreen(targetName, targetImage, tries) {
+    input.disabled = true;
+    document.querySelector(".guess-button").disabled = true;
+
+    document.getElementById("targetCharacterImage").src =
+        `/static/images/characters/${targetImage}`;
+
+    document.getElementById("targetCharacterImage").alt = targetName;
+
+    document.getElementById("triesText").textContent =
+        `You got it in ${tries} ${tries === 1 ? "try" : "tries"}!`;
+
+    document.getElementById("winMessage").style.display = "block";
+}
+
+function markModeCompleted(mode) {
+    document.querySelectorAll(`.mode-button[data-mode="${mode}"]`)
+        .forEach(btn => {
+            btn.classList.add("completed");
+        });
+}
 
 function updateScrollHint() {
     const wrapper = document.querySelector(".table-wrapper");
@@ -229,6 +284,17 @@ document.querySelector(".guess-form")
         const result = await response.json();
 
         guessedCharacters.add(guess);
+        const currentMode = "classic";
+
+        const savedGuesses =
+            JSON.parse(localStorage.getItem(`${currentMode}Guesses`) || "[]");
+
+        savedGuesses.push(result);
+
+        localStorage.setItem(
+            `${currentMode}Guesses`,
+            JSON.stringify(savedGuesses)
+        );
 
         if (result.error) {
             alert(result.error);
@@ -244,26 +310,16 @@ document.querySelector(".guess-form")
         selectedCharacter = null;
 
         if (result.correct) {
-            setTimeout(() => {
-                input.disabled = true;
-                document.querySelector(".guess-button").disabled = true;
+            const currentMode = "classic"; // Change per gamemode
 
-                document.getElementById("targetCharacterImage").src =
-                    `/static/images/characters/${result.targetImage}`;
-
-                document.getElementById("targetCharacterImage").alt =
-                    result.targetName;
-
-                document.getElementById("triesText").textContent =
-                    `You got it in ${guessCount} ${guessCount === 1 ? "try" : "tries"}!`;
-
-                const winMessage = document.getElementById("winMessage");
-                winMessage.style.display = "block";
-
-                setTimeout(() => {
-                    winMessage.scrollIntoView({ behavior: "smooth", block: "center" });
-                }, 100);
-            }, 500);
+            localStorage.setItem(`${currentMode}Completed`, "true");
+            localStorage.setItem(`${currentMode}GuessCount`, guessCount);
+            localStorage.setItem(`${currentMode}TargetName`, result.targetName);
+            localStorage.setItem(`${currentMode}TargetImage`, result.targetImage);
+            localStorage.setItem(`${currentMode}Completed`, "true");
+            
+            markModeCompleted(currentMode);
+            showWinScreen(result.targetName, result.targetImage, guessCount);
         }
 
         setTimeout(() => {
