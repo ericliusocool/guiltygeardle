@@ -8,6 +8,20 @@ let guessCount = 0;
 let selectedCharacter = null;
 let guessedCharacters = new Set();
 
+function updateScrollHint() {
+    const wrapper = document.querySelector(".table-wrapper");
+    const hint = document.getElementById("tableScrollHint");
+
+    if (wrapper.scrollWidth > wrapper.clientWidth) {
+        hint.classList.add("show");
+    } else {
+        hint.classList.remove("show");
+    }
+}
+
+window.addEventListener("load", updateScrollHint);
+window.addEventListener("resize", updateScrollHint);
+
 function submitSuggestion(character) {
     selectedCharacter = character;
 
