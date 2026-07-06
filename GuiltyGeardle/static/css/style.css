@@ -132,8 +132,8 @@ p, h1, h2, h3, h4, h5, h6 {
 .button-game.btn-shine:after {
     background: #ef3838;
     content: "";
-    height: 180px;
-    left: -80px;
+    height: 200px;
+    left: -100px;
     opacity: 0.4;
     position: absolute;
     top: -50px;
