@@ -662,24 +662,63 @@ input#guessInput:disabled {
     opacity: 0.95;
 }
 
-.restart-button {
-    padding: 15px 40px;
-    font-size: 18px;
-    font-weight: 700;
-    background-color: #ff1d1d;
-    color: white;
-    border: none;
-    border-radius: 8px;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    text-transform: uppercase;
-    letter-spacing: 1px;
+.next-mode-container {
+    margin-top: 30px;
 }
 
-.restart-button:hover {
-    background-color: #b82121;
-    transform: scale(1.05);
-    box-shadow: 0 0 15px rgba(255, 29, 29, 0.7);
+.next-mode-container h3 {
+    margin-bottom: 20px;
+    color: white;
+}
+
+.next-mode-button {
+    margin: 0 auto;
+}
+
+.mode-divider {
+    display: flex;
+    align-items: center;
+    margin: 30px 0 20px;
+    color: rgba(255,255,255,.8);
+    font-weight: 600;
+}
+
+.mode-divider::before,
+.mode-divider::after {
+    content: "";
+    flex: 1;
+    height: 2px;
+    background: rgba(255,255,255,.2);
+}
+
+.mode-divider span {
+    margin: 0 16px;
+}
+
+.mode-button {
+    position: relative;
+}
+
+.mode-check {
+    position: absolute;
+    top: -6px;
+    right: -6px;
+    width: 22px;
+    height: 22px;
+    display: none;
+    justify-content: center;
+    align-items: center;
+    background: #45a75d;
+    color: white;
+    border-radius: 50%;
+    border: 2px solid white;
+    font-size: 14px;
+    font-weight: bold;
+    box-shadow: 0 2px 6px rgba(0,0,0,.4);
+}
+
+.mode-button.completed .mode-check {
+    display: flex;
 }
 
 /* =========================
