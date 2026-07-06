@@ -9,6 +9,11 @@ let guessCount = 0;
 let selectedCharacter = null;
 let guessedCharacters = new Set();
 
+function getDailyKey() {
+    const now = new Date();
+    return `${now.getFullYear()}-${now.getMonth() + 1}-${now.getDate()}`;
+}
+
 modes.forEach(mode => {
     if (localStorage.getItem(`${mode}Completed`) === "true") {
         document
@@ -19,6 +24,36 @@ modes.forEach(mode => {
 
 window.addEventListener("load", () => {
     const currentMode = "classic";
+    const todayKey = getDailyKey();
+
+    const savedDay = localStorage.getItem("dailyKey");
+
+    const isNewDay = savedDay !== todayKey;
+
+    if (isNewDay) {
+        modes.forEach(mode => {
+            localStorage.removeItem(`${mode}Guesses`);
+            localStorage.removeItem(`${mode}Completed`);
+            localStorage.removeItem(`${mode}GuessCount`);
+            localStorage.removeItem(`${mode}TargetName`);
+            localStorage.removeItem(`${mode}TargetImage`);
+        });
+
+        localStorage.setItem("dailyKey", todayKey);
+    }
+
+    // NOW reset UI ALWAYS based on clean state OR reload state
+    guessTable.innerHTML = "";
+    guessedCharacters.clear();
+    guessCount = 0;
+
+    document.getElementById("winMessage").style.display = "none";
+    input.disabled = false;
+    document.querySelector(".guess-button").disabled = false;
+
+    document
+        .querySelectorAll(".mode-button.completed")
+        .forEach(btn => btn.classList.remove("completed"));
 
     const savedGuesses =
         JSON.parse(localStorage.getItem(`${currentMode}Guesses`) || "[]");
@@ -31,6 +66,8 @@ window.addEventListener("load", () => {
     });
 
     if (localStorage.getItem(`${currentMode}Completed`) === "true") {
+        markModeCompleted(currentMode);
+
         showWinScreen(
             localStorage.getItem(`${currentMode}TargetName`),
             localStorage.getItem(`${currentMode}TargetImage`),
