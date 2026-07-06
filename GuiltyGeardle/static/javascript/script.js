@@ -12,7 +12,13 @@ function updateScrollHint() {
     const wrapper = document.querySelector(".table-wrapper");
     const hint = document.getElementById("tableScrollHint");
 
-    if (wrapper.scrollWidth > wrapper.clientWidth) {
+    // Don't show until there's at least one guess
+    if (guessCount === 0) {
+        hint.classList.remove("show");
+        return;
+    }
+
+    if (wrapper.scrollWidth > wrapper.clientWidth && wrapper.scrollLeft === 0) {
         hint.classList.add("show");
     } else {
         hint.classList.remove("show");
@@ -231,8 +237,9 @@ document.querySelector(".guess-form")
 
         const row = addGuessRow(result);
         flipRowCells(row);
-
         guessCount++;
+        updateScrollHint();
+
         input.value = "";
         selectedCharacter = null;
 
