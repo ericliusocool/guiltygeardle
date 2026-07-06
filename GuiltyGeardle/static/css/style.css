@@ -472,7 +472,25 @@ input#guessInput:disabled {
 .table-wrapper {
     width: 100%;
     overflow-x: auto;
-    -webkit-overflow-scrolling: touch; 
+    -webkit-overflow-scrolling: touch;
+}
+
+.table-scroll-hint {
+    display: none;
+    text-align: center;
+    color: white;
+    font-weight: 600;
+    margin-bottom: 8px;
+    animation: pulseHint 1.8s ease-in-out infinite;
+}
+
+.table-scroll-hint.show {
+    display: block;
+}
+
+@keyframes pulseHint {
+    0%,100% { opacity: .5; }
+    50% { opacity: 1; }
 }
 
 #guessTable {
